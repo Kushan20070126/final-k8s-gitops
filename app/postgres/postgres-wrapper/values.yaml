@@ -1,0 +1,11 @@
+postgresql:
+  auth:
+    postgresPassword: "PostgresRoot@123"
+    username: "appuser"
+    password: "AppPass@123"
+    database: "appdb"
+
+  primary:
+    persistence:
+      enabled: true
+      size: 10Gi
