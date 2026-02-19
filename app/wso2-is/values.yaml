@@ -1,25 +1,31 @@
-is:
-  # Resource tuning for a single node
+identity-server:
+  # FIX: Switch from private docker.wso2.com to public Docker Hub
+  image:
+    repository: "wso2/wso2is"
+    tag: "7.0.0"
+    pullPolicy: IfNotPresent
+  
+  # Resource tuning for your single 'plane' node
   resources:
     requests:
       memory: "2Gi"
-      cpu: "1"
+      cpu: "1000m"
     limits:
       memory: "4Gi"
-      cpu: "2"
+      cpu: "2000m"
   
-  # Persistence: Using the storage class we discussed
-  # If you haven't installed rancher-local-path, use "standard" or "hostpath"
+  # Persistence using the local-path SC you installed
   persistence:
     enabled: true
     storageClass: "local-path" 
 
-ingress:
-  enabled: true
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/proxy-body-size: "200m"
-  hosts:
-    - host: wso2is.local
-      paths:
-        - /
+  # Ingress configuration
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/proxy-body-size: "200m"
+    hosts:
+      - host: wso2is.local
+        paths:
+          - /
