@@ -1,15 +1,18 @@
-image:
-  repository: "wso2/wso2is"
-  tag: "7.2.0"
-  pullPolicy: IfNotPresent
-
-imagePullSecrets: []
-
-# If the chart requires a sub-key, we provide that too:
 identity-server:
+  wso2:
+    deployment:
+      # Use SingleNode to save resources on your 'plane' node
+      mode: "SingleNode"
+  
   image:
+    # This MUST be wso2/wso2is to use the public Docker Hub
     repository: "wso2/wso2is"
     tag: "7.2.0"
+    pullPolicy: IfNotPresent
+  
+  # Ensure no pull secrets are being injected
+  imagePullSecrets: []
+
   resources:
     requests:
       memory: "2Gi"
@@ -17,7 +20,7 @@ identity-server:
     limits:
       memory: "4Gi"
       cpu: "2000m"
-
+  
   persistence:
     enabled: true
     storageClass: "local-path" 
@@ -25,7 +28,7 @@ identity-server:
   ingress:
     enabled: true
     annotations:
-      kubernetes.io/ingress.class: nginx  
+      kubernetes.io/ingress.class: nginx
     hosts:
       - host: wso2is.local
         paths:
