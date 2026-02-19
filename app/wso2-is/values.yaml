@@ -1,0 +1,18 @@
+identity-server:
+  wso2is:
+    image:
+      repository: "docker.wso2.com/wso2is"
+      tag: "7.2.0"
+      pullPolicy: IfNotPresent  # This is the magic line
+      
+  # Some versions use this
+  image:
+    repository: "wso2/wso2is"
+    tag: "7.2.0"
+    pullPolicy: IfNotPresent
+
+  # Newer versions use this specific sub-key
+  wso2is:
+    image:
+      repository: "wso2/wso2is"
+      tag: "7.2.0"
