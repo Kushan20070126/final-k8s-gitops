@@ -1,21 +1,20 @@
-# This name must match the 'name' in your dependencies list in Chart.yaml
 identity-server:
+  # 1. Standard Helm Image convention
   image:
     repository: "docker.wso2.com/wso2is"
     tag: "7.2.0"
     pullPolicy: IfNotPresent
+
+  # 2. WSO2 Specific convention (Commonly used in their official charts)
   wso2:
     deployment:
       imagePullPolicy: IfNotPresent
+      image: "docker.wso2.com/wso2is"
+      tag: "7.2.0"
 
-  # Some versions use this
-  image:
-    repository: "wso2/wso2is"
-    tag: "7.2.0"
-    pullPolicy: IfNotPresent
-
-  # Newer versions use this specific sub-key
+  # 3. Secondary sub-key used by some versions of this chart
   wso2is:
     image:
-      repository: "wso2/wso2is"
+      repository: "docker.wso2.com/wso2is"
       tag: "7.2.0"
+      pullPolicy: IfNotPresent
