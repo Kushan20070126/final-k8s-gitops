@@ -4,4 +4,4 @@ version: 1.0.0
 dependencies:
   - name: is
     version: 5.11.0
-    repository: https://helm.wso2.com
+    repository: "https://helm.wso2.com"
