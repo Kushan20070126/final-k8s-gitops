@@ -1,11 +1,13 @@
 identity-server:
-  # FIX: Switch from private docker.wso2.com to public Docker Hub
   image:
+    # Use Docker Hub (public) instead of docker.wso2.com (private)
     repository: "wso2/wso2is"
-    tag: "7.0.0"
+    tag: "7.2.0"
     pullPolicy: IfNotPresent
   
-  # Resource tuning for your single 'plane' node
+  # Remove any default pull secrets that might trigger the 401 error
+  imagePullSecrets: []
+
   resources:
     requests:
       memory: "2Gi"
@@ -14,17 +16,14 @@ identity-server:
       memory: "4Gi"
       cpu: "2000m"
   
-  # Persistence using the local-path SC you installed
   persistence:
     enabled: true
     storageClass: "local-path" 
 
-  # Ingress configuration
   ingress:
     enabled: true
     annotations:
       kubernetes.io/ingress.class: nginx
-      nginx.ingress.kubernetes.io/proxy-body-size: "200m"
     hosts:
       - host: wso2is.local
         paths:
