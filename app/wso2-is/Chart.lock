@@ -1,6 +1,0 @@
-dependencies:
-- name: identity-server
-  repository: https://helm.wso2.com
-  version: 7.2.0
-digest: sha256:d5181741dff9320b6a0e879042775550e9bb64e8814ce765e22c8ea3f2fd7cbd
-generated: "2026-02-19T23:16:37.360600394+05:30"
