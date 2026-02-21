@@ -1,6 +1,7 @@
 loki:
   enabled: true
 
+  # ✅ Choose ONE mode
   deploymentMode: SingleBinary
 
   loki:
@@ -10,6 +11,7 @@ loki:
     storage:
       type: filesystem
 
+  # ✅ SingleBinary mode ON
   singleBinary:
     replicas: 1
     persistence:
@@ -17,7 +19,7 @@ loki:
       size: 10Gi
       storageClass: local-path
 
-
+  # ✅ SimpleScalable mode OFF (must be zero)
   simpleScalable:
     read:
       replicas: 0
