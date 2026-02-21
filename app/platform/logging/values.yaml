@@ -1,15 +1,18 @@
 loki:
+  enabled: true
   deploymentMode: SingleBinary
+
+  loki:
+    commonConfig:
+      replication_factor: 1
+    auth_enabled: false
+
+    storage:
+      type: filesystem
+
   singleBinary:
     replicas: 1
-  persistence:
-    enabled: true
-    size: 5Gi
-
-fluent-bit:
-  config:
-    outputs: |
-      [OUTPUT]
-          Name grafana-loki
-          Match *
-          Url http://logging-loki:3100/loki/api/v1/push
+    persistence:
+      enabled: true
+      size: 10Gi
+      storageClass: local-path
