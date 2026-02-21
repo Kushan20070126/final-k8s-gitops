@@ -1,0 +1,13 @@
+kube-prometheus-stack:
+  grafana:
+    enabled: true
+    adminPassword: "admin"
+    service:
+      type: ClusterIP
+
+  prometheus:
+    prometheusSpec:
+      retention: 2d
+
+  alertmanager:
+    enabled: false

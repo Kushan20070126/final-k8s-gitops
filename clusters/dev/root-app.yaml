@@ -1,20 +1,18 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: root-applications
+  name: root-dev
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/Kushan20070126/final-k8s-gitops.git
-    targetRevision: HEAD
-    path: app/wso2-is
+    targetRevision: main
+    path: apps
   destination:
     server: https://kubernetes.default.svc
-    namespace: wso2-is
+    namespace: argocd
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:             
-      - CreateNamespace=true  

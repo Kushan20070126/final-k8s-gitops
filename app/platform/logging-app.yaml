@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: logging
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Kushan20070126/final-k8s-gitops.git
+    targetRevision: main
+    path: apps/platform/logging
+    helm:
+      releaseName: logging
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: logging
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

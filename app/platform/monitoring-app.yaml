@@ -1,17 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: postgres
+  name: monitoring
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/Kushan20070126/final-k8s-gitops.git
     targetRevision: main
-    path: app/postgres/postgres-wrapper
+    path: apps/platform/monitoring
+    helm:
+      releaseName: monitoring
   destination:
     server: https://kubernetes.default.svc
-    namespace: database
+    namespace: monitoring
   syncPolicy:
     automated:
       prune: true
