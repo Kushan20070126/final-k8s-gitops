@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/<YOUR_USER>/<YOUR_REPO>.git
+    repoURL: https://github.com/Kushan20070126/final-k8s-gitops.git
     targetRevision: main
     path: apps/services
   destination:
