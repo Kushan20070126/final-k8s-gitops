@@ -1,6 +1,7 @@
 kube-prometheus-stack:
-  crds:
-    enabled: false
+  prometheusOperator:
+    crds:
+      enabled: false
   prometheus:
     prometheusSpec:
       retention: 2d
@@ -25,6 +26,5 @@ kube-prometheus-stack:
   alertmanager:
     enabled: false
 
-  prometheusOperator:
-    crds:
-      enabled: false
+
+  
