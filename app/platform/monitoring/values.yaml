@@ -1,8 +1,18 @@
 kube-prometheus-stack:
- 
-  prometheusOperator:
-    crds:
-      enabled: false
+  prometheus:
+    prometheusSpec:
+      retention: 2d
+      replicas: 1
+      # ✅ avoid PVC issues for now (good for demos)
+      storageSpec: {}
+      # ✅ reduce load for a small single-node cluster
+      resources:
+        requests:
+          cpu: 200m
+          memory: 512Mi
+        limits:
+          cpu: 1
+          memory: 1Gi
 
   grafana:
     enabled: true
@@ -10,9 +20,9 @@ kube-prometheus-stack:
     service:
       type: ClusterIP
 
-  prometheus:
-    prometheusSpec:
-      retention: 2d
-
   alertmanager:
     enabled: false
+
+  prometheusOperator:
+    crds:
+      enabled: false
