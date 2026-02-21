@@ -1,4 +1,9 @@
 kube-prometheus-stack:
+ 
+  prometheusOperator:
+    crds:
+      enabled: false
+
   grafana:
     enabled: true
     adminPassword: "admin"
@@ -8,9 +13,6 @@ kube-prometheus-stack:
   prometheus:
     prometheusSpec:
       retention: 2d
-    prometheusOperator:
-      crds:
-        enabled: false
 
   alertmanager:
     enabled: false
