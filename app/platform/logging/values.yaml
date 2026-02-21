@@ -1,17 +1,17 @@
 loki:
   enabled: true
-
-  # ✅ Choose ONE mode
   deploymentMode: SingleBinary
 
   loki:
+    # ✅ Quick demo schema (no need to define schema_config manually)
+    useTestSchema: true
+
     auth_enabled: false
     commonConfig:
       replication_factor: 1
     storage:
       type: filesystem
 
-  # ✅ SingleBinary mode ON
   singleBinary:
     replicas: 1
     persistence:
@@ -19,11 +19,13 @@ loki:
       size: 10Gi
       storageClass: local-path
 
-  # ✅ SimpleScalable mode OFF (must be zero)
-  simpleScalable:
-    read:
-      replicas: 0
-    write:
-      replicas: 0
-    backend:
-      replicas: 0
+  # ✅ Ensure scalable mode is OFF
+  read:
+    replicas: 0
+  write:
+    replicas: 0
+  backend:
+    replicas: 0
+
+fluent-bit:
+  enabled: true
