@@ -16,3 +16,6 @@ redis:
       enabled: true
       size: 2Gi
       storageClass: local-path
+
+
+      
