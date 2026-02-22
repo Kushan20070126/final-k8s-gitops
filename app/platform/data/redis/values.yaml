@@ -1,8 +1,12 @@
+global:
+  security:
+    allowInsecureImages: true
+
 redis:
   image:
     registry: docker.io
-    repository: bitnami/redis
-    tag: 7.4-debian-12
+    repository: bitnamilegacy/redis
+    tag: 7.4.3-debian-12-r0
     pullPolicy: IfNotPresent
 
   architecture: standalone
