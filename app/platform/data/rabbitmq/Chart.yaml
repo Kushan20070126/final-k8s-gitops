@@ -1,0 +1,7 @@
+apiVersion: v2
+name: rabbitmq-wrapper
+version: 1.0.0
+dependencies:
+  - name: rabbitmq
+    version: "15.*"
+    repository: "https://charts.bitnami.com/bitnami"
