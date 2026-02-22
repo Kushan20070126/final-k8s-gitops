@@ -1,26 +1,21 @@
-
 image:
   registry: docker.io
   repository: bitnami/redis
-  tag: 7.4-debian-12
+
+  digest: "sha256:2e17cd143c4c4f14ac8f4515674d2e65d5d475701ea43549b51981afbaf36058"
   pullPolicy: IfNotPresent
 
-
 architecture: standalone
-
 
 auth:
   enabled: true
   password: "redis123"
-
 
 master:
   persistence:
     enabled: true
     size: 2Gi
     storageClass: local-path
-  
- 
   resources:
     requests:
       cpu: 100m
