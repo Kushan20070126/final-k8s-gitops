@@ -1,4 +1,11 @@
 minio:
+  ## 1. ADDED: Explicit image block with a rolling tag to fix ImagePullBackOff
+  image:
+    registry: docker.io
+    repository: bitnami/minio
+    tag: 2024-debian-12  # A stable rolling tag to avoid missing 'r0' revisions
+    pullPolicy: IfNotPresent
+
   auth:
     rootUser: minioadmin
     rootPassword: minioadmin123
@@ -8,6 +15,8 @@ minio:
   persistence:
     enabled: true
     size: 10Gi
+    ## 2. ADDED: Explicitly defining your storage class (matches your PVC list)
+    storageClass: "local-path" 
 
   resources:
     requests:
