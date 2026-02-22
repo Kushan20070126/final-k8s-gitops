@@ -1,16 +1,26 @@
-redis:
-  architecture: standalone
 
-  auth:
+image:
+  registry: docker.io
+  repository: bitnami/redis
+  tag: 7.4-debian-12
+  pullPolicy: IfNotPresent
+
+
+architecture: standalone
+
+
+auth:
+  enabled: true
+  password: "redis123"
+
+
+master:
+  persistence:
     enabled: true
-    password: "redis123"
-
-  master:
-    persistence:
-      enabled: true
-      size: 2Gi
-      storageClass: local-path
-
+    size: 2Gi
+    storageClass: local-path
+  
+ 
   resources:
     requests:
       cpu: 100m
