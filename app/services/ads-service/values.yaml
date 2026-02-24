@@ -3,8 +3,8 @@ fullnameOverride: "ads-service"
 replicaCount: 2
 
 image:
-  repository: "<registry>/<namespace>/ads-service"
-  tag: "latest"
+  repository: "kushanrandika/ads-service"
+  tag: "v1.0.0"
   pullPolicy: IfNotPresent
 
 containerPort: 8000
