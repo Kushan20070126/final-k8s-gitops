@@ -1,12 +1,24 @@
+nameOverride: "user-service"
+fullnameOverride: "user-service"
+replicaCount: 2
+
 image:
-  repository: docker.io/<youruser>/user-service
-  tag: "1.0.0"
+  repository: "<registry>/<namespace>/super-admin-service"
+  tag: "latest"
   pullPolicy: IfNotPresent
 
-service:
-  port: 8000
+containerPort: 8000
+command: []
+args: []
 
-ingress:
+service:
   enabled: true
-  host: user.demo.local
-  path: /
+  type: ClusterIP
+  port: 80
+
+config:
+  DATABASE_URL: "postgresql://postgres:password@postgres-postgresql.database.svc.cluster.local:5432/ceylonstaydb"
+
+secrets: {}
+
+resources: {}

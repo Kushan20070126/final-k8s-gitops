@@ -17,7 +17,7 @@ service:
   port: 80
 
 config:
-  DATABASE_URL: "postgresql://postgres:password@postgres-postgresql.database.svc.cluster.local:5432/ads"
+  DATABASE_URL: "postgresql://postgres:password@postgres-postgresql.database.svc.cluster.local:5432/ceylonstaydb"
   RABBITMQ_HOST: "rabbitmq.database.svc.cluster.local"
   RABBITMQ_PORT: "5672"
 
