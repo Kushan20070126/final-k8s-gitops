@@ -3,8 +3,8 @@ fullnameOverride: "admin-service"
 replicaCount: 2
 
 image:
-  repository: ""
-  tag: "latest"
+  repository: "kushanrandika/admin-service"
+  tag: "v1.0.0"
   pullPolicy: IfNotPresent
 
 containerPort: 8000
