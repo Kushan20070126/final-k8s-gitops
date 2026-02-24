@@ -3,7 +3,7 @@ fullnameOverride: "admin-service"
 replicaCount: 2
 
 image:
-  repository: "kushanrandika/user-service:v1.0.0"
+  repository: ""
   tag: "latest"
   pullPolicy: IfNotPresent
 
