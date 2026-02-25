@@ -3,7 +3,7 @@ fullnameOverride: "notification-service"
 replicaCount: 2
 
 image:
-  repository: "kushanrandika/notification-service   "
+  repository: "kushanrandika/notification-service"
   tag: "v1.0.0"
   pullPolicy: IfNotPresent
 
