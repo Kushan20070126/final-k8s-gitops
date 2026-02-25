@@ -3,8 +3,8 @@ fullnameOverride: "ai-service"
 replicaCount: 1
 
 image:
-  repository: "<registry>/<namespace>/ai-service"
-  tag: "latest"
+  repository: "kushanrandika/ai-service"
+  tag: "v1.0.0"
   pullPolicy: IfNotPresent
 
 containerPort: 0
