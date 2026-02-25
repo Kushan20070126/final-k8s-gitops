@@ -3,8 +3,8 @@ fullnameOverride: "super-admin-service"
 replicaCount: 2
 
 image:
-  repository: "<registry>/<namespace>/super-admin-service"
-  tag: "latest"
+  repository: "kushanrandika/super-admin-service"
+  tag: "v1.0.0"
   pullPolicy: IfNotPresent
 
 containerPort: 8000

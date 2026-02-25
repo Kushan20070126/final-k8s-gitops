@@ -3,8 +3,8 @@ fullnameOverride: "search-service"
 replicaCount: 2
 
 image:
-  repository: "<registry>/<namespace>/search-service"
-  tag: "latest"
+  repository: "kushanrandika/search-service"
+  tag: "v1.0.0"
   pullPolicy: IfNotPresent
 
 containerPort: 8000
