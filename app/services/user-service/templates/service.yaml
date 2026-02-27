@@ -1,9 +1,13 @@
+{{- if .Values.service.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Chart.Name }}
+  name: {{ include "svc.fullname" . }}
 spec:
-  selector: { app: {{ .Chart.Name }} }
+  type: {{ .Values.service.type }}
+  selector:
+    app: {{ include "svc.fullname" . }}
   ports:
     - port: {{ .Values.service.port }}
-      targetPort: {{ .Values.service.port }}
+      targetPort: {{ .Values.containerPort }}
+{{- end }}
