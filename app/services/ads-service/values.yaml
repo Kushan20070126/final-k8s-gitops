@@ -24,10 +24,12 @@ config:
   REDIS_HOST: "redis-master.database.svc.cluster.local"
   REDIS_PORT: "6379"
   REDIS_DB: "0"
+  RABBITMQ_USER: "admin"
 
 secrets:
   MINIO_ACCESS: "minioadmin"
   MINIO_SECRET: "minioadmin"
   REDIS_PASSWORD: ""
+  RABBITMQ_PASS: "admin123"
 
 resources: {}
