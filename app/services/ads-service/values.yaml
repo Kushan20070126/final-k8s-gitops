@@ -33,3 +33,6 @@ secrets:
   RABBITMQ_PASS: "admin123"
 
 resources: {}
+
+rabbitmqPatch:
+  enabled: true

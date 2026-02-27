@@ -39,5 +39,17 @@ spec:
                 name: {{ include "svc.fullname" . }}-secret
             {{- end }}
           {{- end }}
+          {{- if .Values.rabbitmqPatch.enabled }}
+          volumeMounts:
+            - name: rabbitmq-py-override
+              mountPath: /app/app/rabbitmq.py
+              subPath: rabbitmq.py
+          {{- end }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
+      {{- if .Values.rabbitmqPatch.enabled }}
+      volumes:
+        - name: rabbitmq-py-override
+          configMap:
+            name: {{ include "svc.fullname" . }}-rabbitmq-patch
+      {{- end }}

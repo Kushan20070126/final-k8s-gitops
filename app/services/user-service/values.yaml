@@ -16,6 +16,11 @@ service:
   type: ClusterIP
   port: 80
 
+ingress:
+  enabled: false
+  host: user.local
+  path: /
+
 config:
   DATABASE_URL: "postgresql://postgres:password@postgres-postgresql.database.svc.cluster.local:5432/ceylonstaydb"
 

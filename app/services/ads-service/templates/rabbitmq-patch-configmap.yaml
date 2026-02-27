@@ -1,0 +1,73 @@
+{{- if .Values.rabbitmqPatch.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "svc.fullname" . }}-rabbitmq-patch
+data:
+  rabbitmq.py: |
+    import os
+    import pika
+
+    AI_QUEUE_NAME = "ai_queue"
+    USER_EVENTS_QUEUE_NAME = "user_events_queue"
+    NOTIFICATION_QUEUE_NAME = "notification_queue"
+
+
+    def _create_connection():
+      host = os.getenv("RABBITMQ_HOST", "rabbitmq.database.svc.cluster.local")
+      port = int(os.getenv("RABBITMQ_PORT", "5672"))
+      user = os.getenv("RABBITMQ_USER", "guest")
+      password = os.getenv("RABBITMQ_PASS") or os.getenv("RABBITMQ_PASSWORD", "guest")
+      vhost = os.getenv("RABBITMQ_VHOST", "/")
+
+      credentials = pika.PlainCredentials(user, password)
+      parameters = pika.ConnectionParameters(
+          host=host,
+          port=port,
+          virtual_host=vhost,
+          credentials=credentials,
+      )
+      return pika.BlockingConnection(parameters)
+
+
+    def _publish(queue_name, message):
+      connection = None
+      try:
+          connection = _create_connection()
+          channel = connection.channel()
+          channel.queue_declare(queue=queue_name, durable=True)
+          channel.basic_publish(exchange="", routing_key=queue_name, body=message)
+      except Exception as exc:
+          print(f"RabbitMQ publish error for queue {queue_name}: {exc}")
+      finally:
+          if connection and connection.is_open:
+              connection.close()
+
+
+    def send_to_ai_queue(message):
+      _publish(AI_QUEUE_NAME, message)
+
+
+    def send_notification_event(message):
+      _publish(NOTIFICATION_QUEUE_NAME, message)
+
+
+    def consume_user_events(callback):
+      connection = None
+      try:
+          connection = _create_connection()
+          channel = connection.channel()
+          channel.queue_declare(queue=USER_EVENTS_QUEUE_NAME, durable=True)
+          channel.basic_consume(
+              queue=USER_EVENTS_QUEUE_NAME,
+              on_message_callback=callback,
+              auto_ack=True,
+          )
+          print("Listening for user events...")
+          channel.start_consuming()
+      except Exception as exc:
+          print(f"Connection Error: Could not reach RabbitMQ at {os.getenv('RABBITMQ_HOST')}: {exc}")
+      finally:
+          if connection and connection.is_open:
+              connection.close()
+{{- end }}
