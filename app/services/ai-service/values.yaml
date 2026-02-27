@@ -22,9 +22,11 @@ config:
   DB_DSN: "dbname=ceylonstaydb user=postgres password=postgres123 host=postgres-postgresql.database.svc.cluster.local port=5432"
   RABBITMQ_HOST: "rabbitmq.database.svc.cluster.local"
   MINIO_ENDPOINT: "minio.database.svc.cluster.local:9000"
+  RABBITMQ_USER: "admin"
 
 secrets:
   MINIO_ACCESS: "minioadmin"
   MINIO_SECRET: "minioadmin"
+  RABBITMQ_PASS: "admin123"
 
 resources: {}
