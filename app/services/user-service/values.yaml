@@ -22,7 +22,7 @@ ingress:
   path: /
 
 config:
-  DATABASE_URL: "postgresql://postgres:password@postgres-postgresql.database.svc.cluster.local:5432/ceylonstaydb"
+  DATABASE_URL: "postgresql://postgres:postgres123@postgres-postgresql.database.svc.cluster.local:5432/ceylonstaydb"
 
 secrets: {}
 
