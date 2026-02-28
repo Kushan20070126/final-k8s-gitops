@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: wso2-is
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/wso2/kubernetes-is.git
+    targetRevision: 86155111789b4f3566ac693fea36132d7640fe52
+    path: .
+    helm:
+      releaseName: wso2-is
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: wso2
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
