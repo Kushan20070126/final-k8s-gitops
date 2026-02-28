@@ -13,6 +13,11 @@ spec:
       releaseName: wso2-is
       valueFiles:
         - values.yaml
+      parameters:
+        - name: deployment.image.registry
+          value: docker.io
+        - name: deployment.image.repository
+          value: wso2/wso2is
   destination:
     server: https://kubernetes.default.svc
     namespace: wso2
