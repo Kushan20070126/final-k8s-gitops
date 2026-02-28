@@ -1,0 +1,43 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: wso2-apim
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://helm.wso2.com
+    chart: am-single-node
+    targetRevision: 4.2.0-1
+    helm:
+      releaseName: wso2-apim
+      parameters:
+        - name: wso2.deployment.am.dockerRegistry
+          value: docker.io/wso2
+        - name: wso2.deployment.dependencies.nfsServerProvisioner
+          value: "false"
+        - name: wso2.deployment.persistentRuntimeArtifacts.apacheSolrIndexing.enabled
+          value: "false"
+        - name: mysql-am.mysql.persistence.storageClass
+          value: local-path
+        - name: mysql-am.mysql.image
+          value: mysql
+        - name: mysql-am.mysql.imageTag
+          value: "5.7"
+        - name: wso2.deployment.am.ingress.management.hostname
+          value: apim.demo.local
+        - name: wso2.deployment.am.ingress.gateway.hostname
+          value: gateway.apim.demo.local
+        - name: wso2.deployment.am.ingress.websub.hostname
+          value: websub.apim.demo.local
+        - name: wso2.deployment.am.ingress.websocket.hostname
+          value: websocket.apim.demo.local
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: apim
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
