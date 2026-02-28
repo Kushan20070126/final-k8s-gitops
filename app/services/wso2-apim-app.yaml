@@ -14,6 +14,8 @@ spec:
       parameters:
         - name: wso2.deployment.am.dockerRegistry
           value: docker.io/wso2
+        - name: wso2.deployment.am.imageTag
+          value: 4.3.0
         - name: wso2.deployment.dependencies.nfsServerProvisioner
           value: "false"
         - name: wso2.deployment.persistentRuntimeArtifacts.apacheSolrIndexing.enabled
