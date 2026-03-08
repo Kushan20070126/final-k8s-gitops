@@ -49,13 +49,13 @@ spec:
         - name: wso2.deployment.am.keyManager.external.password
           value: admin
         - name: wso2.deployment.am.keyManager.external.idp.serverURL
-          value: http://wso2-is-identity-server-http.wso2.svc.cluster.local:9763
+          value: https://wso2is.tail97d15d.ts.net
         - name: wso2.deployment.am.keyManager.external.idp.authorizeEndpoint
-          value: http://wso2-is-identity-server-http.wso2.svc.cluster.local:9763/oauth2/authorize
+          value: https://wso2is.tail97d15d.ts.net/oauth2/authorize
         - name: wso2.deployment.am.keyManager.external.idp.oidcLogoutEndpoint
-          value: http://wso2-is-identity-server-http.wso2.svc.cluster.local:9763/oidc/logout
+          value: https://wso2is.tail97d15d.ts.net/oidc/logout
         - name: wso2.deployment.am.keyManager.external.idp.oidcCheckSessionEndpoint
-          value: http://wso2-is-identity-server-http.wso2.svc.cluster.local:9763/oidc/checksession
+          value: https://wso2is.tail97d15d.ts.net/oidc/checksession
   destination:
     server: https://kubernetes.default.svc
     namespace: apim

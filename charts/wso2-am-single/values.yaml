@@ -165,10 +165,10 @@ wso2:
           poolInitIdleCapacity: 50
           poolMaxIdle: 100
           idp:
-            serverURL: http://wso2-is-identity-server-http.wso2.svc.cluster.local:9763
-            authorizeEndpoint: http://wso2-is-identity-server-http.wso2.svc.cluster.local:9763/oauth2/authorize
-            oidcLogoutEndpoint: http://wso2-is-identity-server-http.wso2.svc.cluster.local:9763/oidc/logout
-            oidcCheckSessionEndpoint: http://wso2-is-identity-server-http.wso2.svc.cluster.local:9763/oidc/checksession
+            serverURL: https://wso2is.tail97d15d.ts.net
+            authorizeEndpoint: https://wso2is.tail97d15d.ts.net/oauth2/authorize
+            oidcLogoutEndpoint: https://wso2is.tail97d15d.ts.net/oidc/logout
+            oidcCheckSessionEndpoint: https://wso2is.tail97d15d.ts.net/oidc/checksession
 
   
 kubernetes:
