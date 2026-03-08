@@ -105,6 +105,7 @@ wso2:
 
       # Configure Ingresses
       ingress:
+        className: "nginx"
         management:
           enabled: true
           # Hostname for API Manager Carbon Management Console, Publisher, DevPortal and Admin Portal

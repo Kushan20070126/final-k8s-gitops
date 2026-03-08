@@ -24,6 +24,7 @@ metadata:
 {{ toYaml .Values.wso2.deployment.am.ingress.gateway.annotations | indent 4 }}
 {{- end }}
 spec:
+  ingressClassName: {{ .Values.wso2.deployment.am.ingress.className }}
   tls:
   - hosts:
     - {{ .Values.wso2.deployment.am.ingress.gateway.hostname }}

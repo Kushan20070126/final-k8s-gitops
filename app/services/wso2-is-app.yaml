@@ -18,6 +18,10 @@ spec:
           value: docker.io
         - name: deployment.image.repository
           value: wso2/wso2is
+        - name: deployment.ingress.hostName
+          value: wso2is.tail97d15d.ts.net
+        - name: deployment.ingress.ingressClassName
+          value: nginx
   destination:
     server: https://kubernetes.default.svc
     namespace: wso2

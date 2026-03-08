@@ -31,13 +31,15 @@ spec:
         - name: mysql-am.mysql.imageTag
           value: "5.7"
         - name: wso2.deployment.am.ingress.management.hostname
-          value: apim.demo.local
+          value: apim.tail97d15d.ts.net
         - name: wso2.deployment.am.ingress.gateway.hostname
-          value: gateway.apim.demo.local
+          value: gateway.apim.tail97d15d.ts.net
         - name: wso2.deployment.am.ingress.websub.hostname
-          value: websub.apim.demo.local
+          value: websub.apim.tail97d15d.ts.net
         - name: wso2.deployment.am.ingress.websocket.hostname
-          value: websocket.apim.demo.local
+          value: websocket.apim.tail97d15d.ts.net
+        - name: wso2.deployment.am.ingress.className
+          value: nginx
         - name: wso2.deployment.am.keyManager.external.enabled
           value: "true"
         - name: wso2.deployment.am.keyManager.external.serviceURL
