@@ -147,11 +147,11 @@ wso2:
         apim:
           username: wso2carbon
           password: wso2carbon
-          url: jdbc:mysql://wso2am-mysql-db-service:3306/WSO2AM_DB?useSSL=false&autoReconnect=true&requireSSL=false&verifyServerCertificate=false
+          url: jdbc:mysql://wso2am-mysql-db-service:3306/WSO2AM_DB?useSSL=false&amp;autoReconnect=true&amp;requireSSL=false&amp;verifyServerCertificate=false
         apim_shared:
           username: wso2carbon
           password: wso2carbon
-          url: jdbc:mysql://wso2am-mysql-db-service:3306/WSO2AM_SHARED_DB?useSSL=false&autoReconnect=true&requireSSL=false&verifyServerCertificate=false
+          url: jdbc:mysql://wso2am-mysql-db-service:3306/WSO2AM_SHARED_DB?useSSL=false&amp;autoReconnect=true&amp;requireSSL=false&amp;verifyServerCertificate=false
 
   
 kubernetes:
