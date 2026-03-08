@@ -22,7 +22,44 @@ args:
     export YOLO_CONFIG_DIR="${YOLO_CONFIG_DIR:-/tmp/Ultralytics}"
     mkdir -p "${YOLO_CONFIG_DIR}" "${YOLO_CONFIG_DIR}/Ultralytics" /tmp/Ultralytics || true
     chmod 0777 "${YOLO_CONFIG_DIR}" "${YOLO_CONFIG_DIR}/Ultralytics" /tmp/Ultralytics || true
-    exec python app/worker.py
+    exec python - <<'PY'
+    import os
+    import runpy
+    import pika
+
+    rabbitmq_user = (
+        os.getenv("RABBITMQ_USER")
+        or os.getenv("RABBITMQ_USERNAME")
+        or os.getenv("RABBITMQ_DEFAULT_USER")
+        or "admin"
+    )
+    rabbitmq_pass = (
+        os.getenv("RABBITMQ_PASS")
+        or os.getenv("RABBITMQ_PASSWORD")
+        or os.getenv("RABBITMQ_DEFAULT_PASS")
+        or "admin123"
+    )
+    rabbitmq_host = os.getenv("RABBITMQ_HOST", "rabbitmq.database.svc.cluster.local")
+    rabbitmq_port = int(os.getenv("RABBITMQ_PORT", "5672"))
+    rabbitmq_vhost = os.getenv("RABBITMQ_VHOST", "/")
+
+    _orig_connection_parameters = pika.ConnectionParameters
+
+    def _patched_connection_parameters(*args, **kwargs):
+        if "host" not in kwargs:
+            kwargs["host"] = rabbitmq_host
+        if "port" not in kwargs:
+            kwargs["port"] = rabbitmq_port
+        if "virtual_host" not in kwargs:
+            kwargs["virtual_host"] = rabbitmq_vhost
+        if "credentials" not in kwargs or kwargs["credentials"] is None:
+            kwargs["credentials"] = pika.PlainCredentials(rabbitmq_user, rabbitmq_pass)
+        return _orig_connection_parameters(*args, **kwargs)
+
+    pika.ConnectionParameters = _patched_connection_parameters
+
+    runpy.run_path("app/worker.py", run_name="__main__")
+    PY
 
 service:
   enabled: false
