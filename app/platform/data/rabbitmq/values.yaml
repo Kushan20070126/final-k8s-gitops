@@ -11,6 +11,8 @@ rabbitmq:
   auth:
     username: admin
     password: admin123
+    securePassword: false
+    updatePassword: true
     erlangCookie: "my-erlang-cookie-123456"
 
   persistence:

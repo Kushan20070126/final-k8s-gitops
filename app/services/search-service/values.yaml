@@ -18,7 +18,17 @@ service:
 
 config:
   DATABASE_URL: "postgresql://postgres:postgres123@postgres-postgresql.database.svc.cluster.local:5432/ceylonstaydb"
+  RABBITMQ_HOST: "rabbitmq.database.svc.cluster.local"
+  RABBITMQ_PORT: "5672"
+  RABBITMQ_URL: "amqp://admin:admin123@rabbitmq.database.svc.cluster.local:5672/%2F"
+  AMQP_URL: "amqp://admin:admin123@rabbitmq.database.svc.cluster.local:5672/%2F"
+  RABBITMQ_USER: "admin"
+  RABBITMQ_USERNAME: "admin"
+  RABBITMQ_DEFAULT_USER: "admin"
 
-secrets: {}
+secrets:
+  RABBITMQ_PASS: "admin123"
+  RABBITMQ_PASSWORD: "admin123"
+  RABBITMQ_DEFAULT_PASS: "admin123"
 
 resources: {}
