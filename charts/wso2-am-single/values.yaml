@@ -152,6 +152,19 @@ wso2:
           username: wso2carbon
           password: wso2carbon
           url: jdbc:mysql://wso2am-mysql-db-service:3306/WSO2AM_SHARED_DB?useSSL=false&amp;autoReconnect=true&amp;requireSSL=false&amp;verifyServerCertificate=false
+      keyManager:
+        external:
+          enabled: false
+          serviceURL: https://wso2-is-identity-server.wso2.svc.cluster.local:9443/services/
+          username: admin
+          password: admin
+          poolInitIdleCapacity: 50
+          poolMaxIdle: 100
+          idp:
+            serverURL: https://wso2-is-identity-server.wso2.svc.cluster.local:9443
+            authorizeEndpoint: https://wso2-is-identity-server.wso2.svc.cluster.local:9443/oauth2/authorize
+            oidcLogoutEndpoint: https://wso2-is-identity-server.wso2.svc.cluster.local:9443/oidc/logout
+            oidcCheckSessionEndpoint: https://wso2-is-identity-server.wso2.svc.cluster.local:9443/oidc/checksession
 
   
 kubernetes:

@@ -140,12 +140,27 @@ data:
     auth_token = ""
     {{ end }}
 
+    {{ if .Values.wso2.deployment.am.keyManager.external.enabled }}
+    [apim.key_manager]
+    service_url = "{{ .Values.wso2.deployment.am.keyManager.external.serviceURL }}"
+    username = "{{ .Values.wso2.deployment.am.keyManager.external.username }}"
+    password = "{{ .Values.wso2.deployment.am.keyManager.external.password }}"
+    pool.init_idle_capacity = {{ .Values.wso2.deployment.am.keyManager.external.poolInitIdleCapacity }}
+    pool.max_idle = {{ .Values.wso2.deployment.am.keyManager.external.poolMaxIdle }}
+
+    [apim.idp]
+    server_url = "{{ .Values.wso2.deployment.am.keyManager.external.idp.serverURL }}"
+    authorize_endpoint = "{{ .Values.wso2.deployment.am.keyManager.external.idp.authorizeEndpoint }}"
+    oidc_logout_endpoint = "{{ .Values.wso2.deployment.am.keyManager.external.idp.oidcLogoutEndpoint }}"
+    oidc_check_session_endpoint = "{{ .Values.wso2.deployment.am.keyManager.external.idp.oidcCheckSessionEndpoint }}"
+    {{ else }}
     [apim.key_manager]
     service_url = "https://localhost:${mgt.transport.https.port}/services/"
     username = "$ref{super_admin.username}"
     password = "$ref{super_admin.password}"
     pool.init_idle_capacity = 50
     pool.max_idle = 100
+    {{ end }}
 
     [apim.http_client]
     max_total = 100

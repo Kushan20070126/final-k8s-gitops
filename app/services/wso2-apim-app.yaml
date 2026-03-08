@@ -38,6 +38,22 @@ spec:
           value: websub.apim.demo.local
         - name: wso2.deployment.am.ingress.websocket.hostname
           value: websocket.apim.demo.local
+        - name: wso2.deployment.am.keyManager.external.enabled
+          value: "true"
+        - name: wso2.deployment.am.keyManager.external.serviceURL
+          value: https://wso2-is-identity-server.wso2.svc.cluster.local:9443/services/
+        - name: wso2.deployment.am.keyManager.external.username
+          value: admin
+        - name: wso2.deployment.am.keyManager.external.password
+          value: admin
+        - name: wso2.deployment.am.keyManager.external.idp.serverURL
+          value: https://wso2-is-identity-server.wso2.svc.cluster.local:9443
+        - name: wso2.deployment.am.keyManager.external.idp.authorizeEndpoint
+          value: https://wso2-is-identity-server.wso2.svc.cluster.local:9443/oauth2/authorize
+        - name: wso2.deployment.am.keyManager.external.idp.oidcLogoutEndpoint
+          value: https://wso2-is-identity-server.wso2.svc.cluster.local:9443/oidc/logout
+        - name: wso2.deployment.am.keyManager.external.idp.oidcCheckSessionEndpoint
+          value: https://wso2-is-identity-server.wso2.svc.cluster.local:9443/oidc/checksession
   destination:
     server: https://kubernetes.default.svc
     namespace: apim
