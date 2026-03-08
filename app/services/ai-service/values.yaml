@@ -9,9 +9,20 @@ image:
 
 containerPort: 0
 command:
-  - "python"
+  - "/bin/sh"
+  - "-c"
 args:
-  - "app/worker.py"
+  - |
+    export RABBITMQ_USER="${RABBITMQ_USER:-${RABBITMQ_USERNAME:-${RABBITMQ_DEFAULT_USER:-admin}}}"
+    export RABBITMQ_USERNAME="${RABBITMQ_USERNAME:-${RABBITMQ_USER}}"
+    export RABBITMQ_PASS="${RABBITMQ_PASS:-${RABBITMQ_PASSWORD:-${RABBITMQ_DEFAULT_PASS:-admin123}}}"
+    export RABBITMQ_PASSWORD="${RABBITMQ_PASSWORD:-${RABBITMQ_PASS}}"
+    export RABBITMQ_URL="${RABBITMQ_URL:-amqp://${RABBITMQ_USER}:${RABBITMQ_PASS}@${RABBITMQ_HOST}:${RABBITMQ_PORT}/%2F}"
+    export AMQP_URL="${AMQP_URL:-${RABBITMQ_URL}}"
+    export YOLO_CONFIG_DIR="${YOLO_CONFIG_DIR:-/tmp/Ultralytics}"
+    mkdir -p "${YOLO_CONFIG_DIR}" "${YOLO_CONFIG_DIR}/Ultralytics" /tmp/Ultralytics || true
+    chmod 0777 "${YOLO_CONFIG_DIR}" "${YOLO_CONFIG_DIR}/Ultralytics" /tmp/Ultralytics || true
+    exec python app/worker.py
 
 service:
   enabled: false
