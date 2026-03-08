@@ -1,0 +1,27 @@
+nameOverride: "console-frontend"
+fullnameOverride: "console-frontend"
+replicaCount: 2
+
+image:
+  repository: "kushanrandika/console-frontend"
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+containerPort: 80
+command: []
+args: []
+
+service:
+  enabled: true
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  host: console.tail97d15d.ts.net
+  path: /
+
+config: {}
+secrets: {}
+
+resources: {}
