@@ -1,11 +1,11 @@
 kube-prometheus-stack:
-  # ✅ Stop Helm from trying to install CRDs (ArgoCD should also use skipCrds=true)
+  # Install Prometheus Operator CRDs so PrometheusRule/ServiceMonitor resources can be created.
   crds:
-    enabled: false
+    enabled: true
 
   prometheusOperator:
     crds:
-      enabled: false
+      enabled: true
 
   # ✅ Prometheus settings
   prometheus:
