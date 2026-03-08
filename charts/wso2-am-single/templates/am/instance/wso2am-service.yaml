@@ -30,6 +30,12 @@ spec:
     - name: pass-through-https
       protocol: TCP
       port: 8243
+    - name: websocket-http
+      protocol: TCP
+      port: 9099
+    - name: websocket-https
+      protocol: TCP
+      port: 8099
     - name: binary
       protocol: TCP
       port: 9611

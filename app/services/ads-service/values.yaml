@@ -28,9 +28,10 @@ config:
 
 secrets:
   MINIO_ACCESS: "minioadmin"
-  MINIO_SECRET: "minioadmin"
-  REDIS_PASSWORD: ""
+  MINIO_SECRET: "minioadmin123"
+  REDIS_PASSWORD: "redis123"
   RABBITMQ_PASS: "admin123"
+  RABBITMQ_PASSWORD: "admin123"
 
 resources: {}
 

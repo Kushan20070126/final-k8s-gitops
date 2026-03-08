@@ -45,8 +45,19 @@ spec:
             - "-c"
             - |
               set -e
-              connector_version=8.0.17
-              wget "{{ .Values.wso2.deployment.am.db.driver_url }}" -P /db-connector-jar/
+              DEST="/db-connector-jar/mysql-connector-j.jar"
+              for url in \
+                "{{ .Values.wso2.deployment.am.db.driver_url }}" \
+                "https://repo1.maven.org/maven2/com/mysql/mysql-connector-j/8.0.33/mysql-connector-j-8.0.33.jar" \
+                "https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.29/mysql-connector-java-8.0.29.jar"; do
+                echo "Attempting connector download: ${url}"
+                if wget --no-check-certificate -T 30 -t 3 -O "${DEST}" "${url}"; then
+                  echo "MySQL connector downloaded to ${DEST}"
+                  exit 0
+                fi
+              done
+              echo "WARNING: Unable to download MySQL connector from configured fallback URLs"
+              exit 1
           volumeMounts:
             - name: db-connector-jar
               mountPath: /db-connector-jar
@@ -83,6 +94,10 @@ spec:
             - containerPort: 8280
               protocol: "TCP"
             - containerPort: 8243
+              protocol: "TCP"
+            - containerPort: 9099
+              protocol: "TCP"
+            - containerPort: 8099
               protocol: "TCP"
             - containerPort: 9763
               protocol: "TCP"

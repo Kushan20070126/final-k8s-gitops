@@ -4,7 +4,7 @@ replicaCount: 1
 
 image:
   repository: "kushanrandika/ai-service"
-  tag: "v1.0.1"
+  tag: "v1.0.0"
   pullPolicy: IfNotPresent
 
 containerPort: 0
@@ -26,7 +26,8 @@ config:
 
 secrets:
   MINIO_ACCESS: "minioadmin"
-  MINIO_SECRET: "minioadmin"
+  MINIO_SECRET: "minioadmin123"
   RABBITMQ_PASS: "admin123"
+  RABBITMQ_PASSWORD: "admin123"
 
 resources: {}
