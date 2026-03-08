@@ -144,6 +144,9 @@ wso2:
         type: mysql
         driver: com.mysql.cj.jdbc.Driver
         driver_url: https://repo1.maven.org/maven2/com/mysql/mysql-connector-j/8.0.33/mysql-connector-j-8.0.33.jar
+        autoMigrate:
+          enabled: true
+          image: mysql:8.0
         apim:
           username: wso2carbon
           password: wso2carbon
@@ -155,16 +158,16 @@ wso2:
       keyManager:
         external:
           enabled: false
-          serviceURL: https://wso2-is-identity-server.wso2.svc.cluster.local:9443/services/
+          serviceURL: http://wso2-is-identity-server-http.wso2.svc.cluster.local:9763/services/
           username: admin
           password: admin
           poolInitIdleCapacity: 50
           poolMaxIdle: 100
           idp:
-            serverURL: https://wso2-is-identity-server.wso2.svc.cluster.local:9443
-            authorizeEndpoint: https://wso2-is-identity-server.wso2.svc.cluster.local:9443/oauth2/authorize
-            oidcLogoutEndpoint: https://wso2-is-identity-server.wso2.svc.cluster.local:9443/oidc/logout
-            oidcCheckSessionEndpoint: https://wso2-is-identity-server.wso2.svc.cluster.local:9443/oidc/checksession
+            serverURL: http://wso2-is-identity-server-http.wso2.svc.cluster.local:9763
+            authorizeEndpoint: http://wso2-is-identity-server-http.wso2.svc.cluster.local:9763/oauth2/authorize
+            oidcLogoutEndpoint: http://wso2-is-identity-server-http.wso2.svc.cluster.local:9763/oidc/logout
+            oidcCheckSessionEndpoint: http://wso2-is-identity-server-http.wso2.svc.cluster.local:9763/oidc/checksession
 
   
 kubernetes:

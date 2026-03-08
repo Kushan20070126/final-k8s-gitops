@@ -38,6 +38,63 @@ spec:
         - name: init-db
           image: busybox:1.32
           command: ['sh', '-c', 'echo -e "Checking for the availability of DB Server deployment"; while ! nc -z "{{ .Values.wso2.deployment.am.db.hostname }}" {{ .Values.wso2.deployment.am.db.port }}; do sleep 1; printf "-"; done; echo -e "  >> DB Server has started";']
+        {{ if .Values.wso2.deployment.am.db.autoMigrate.enabled }}
+        - name: init-db-schema-migrations
+          image: {{ .Values.wso2.deployment.am.db.autoMigrate.image }}
+          command:
+            - /bin/sh
+            - "-c"
+            - |
+              set -e
+              mysql -h "{{ .Values.wso2.deployment.am.db.hostname }}" \
+                -P {{ .Values.wso2.deployment.am.db.port }} \
+                -u "{{ .Values.wso2.deployment.am.db.apim.username }}" \
+                -p"{{ .Values.wso2.deployment.am.db.apim.password }}" \
+                WSO2AM_DB <<'SQL'
+              CREATE TABLE IF NOT EXISTS AM_GATEWAY_POLICY_METADATA (
+                GLOBAL_POLICY_MAPPING_UUID VARCHAR(45)   NOT NULL,
+                DISPLAY_NAME               VARCHAR(255)  NULL,
+                DESCRIPTION                VARCHAR(1023) NULL,
+                ORGANIZATION               VARCHAR(100)  NOT NULL,
+                PRIMARY KEY (GLOBAL_POLICY_MAPPING_UUID)
+              )ENGINE INNODB;
+
+              CREATE TABLE IF NOT EXISTS AM_GATEWAY_POLICY_MAPPING (
+                POLICY_TO_FLOW_INFO_MAPPING_ID INTEGER AUTO_INCREMENT,
+                GLOBAL_POLICY_MAPPING_UUID     VARCHAR(45)   NOT NULL,
+                POLICY_UUID                    VARCHAR(45)   NOT NULL,
+                POLICY_ORDER                   INTEGER       NOT NULL,
+                DIRECTION                      VARCHAR(10)   NOT NULL,
+                PARAMETERS                     VARCHAR(1024) NOT NULL,
+                FOREIGN KEY (POLICY_UUID) REFERENCES AM_OPERATION_POLICY (POLICY_UUID) ON UPDATE CASCADE ON DELETE RESTRICT,
+                FOREIGN KEY (GLOBAL_POLICY_MAPPING_UUID) REFERENCES AM_GATEWAY_POLICY_METADATA (GLOBAL_POLICY_MAPPING_UUID) ON UPDATE CASCADE ON DELETE CASCADE,
+                PRIMARY KEY (POLICY_TO_FLOW_INFO_MAPPING_ID)
+              )ENGINE INNODB;
+
+              CREATE TABLE IF NOT EXISTS AM_GATEWAY_POLICY_DEPLOYMENT (
+                GATEWAY_LABEL              VARCHAR(255) NOT NULL,
+                GLOBAL_POLICY_MAPPING_UUID VARCHAR(45)  NOT NULL,
+                ORGANIZATION               VARCHAR(100) NOT NULL,
+                FOREIGN KEY (GLOBAL_POLICY_MAPPING_UUID) REFERENCES AM_GATEWAY_POLICY_METADATA (GLOBAL_POLICY_MAPPING_UUID) ON UPDATE CASCADE ON DELETE RESTRICT,
+                PRIMARY KEY (ORGANIZATION, GATEWAY_LABEL)
+              )ENGINE INNODB;
+
+              CREATE TABLE IF NOT EXISTS AM_APP_REVOKED_EVENT (
+                CONSUMER_KEY    VARCHAR(255)    NOT NULL,
+                TIME_REVOKED    TIMESTAMP       NOT NULL,
+                ORGANIZATION    VARCHAR(100),
+                PRIMARY KEY (CONSUMER_KEY, ORGANIZATION)
+              )ENGINE INNODB;
+
+              CREATE TABLE IF NOT EXISTS AM_SUBJECT_ENTITY_REVOKED_EVENT (
+                ENTITY_ID       VARCHAR(255)    NOT NULL,
+                ENTITY_TYPE     VARCHAR(100)    NOT NULL,
+                TIME_REVOKED    TIMESTAMP       NOT NULL,
+                ORGANIZATION    VARCHAR(100),
+                PRIMARY KEY (ENTITY_ID, ENTITY_TYPE, ORGANIZATION)
+              )ENGINE INNODB;
+              SQL
+        {{ end }}
         - name: init-db-connector-download
           image: busybox:1.32
           command:
