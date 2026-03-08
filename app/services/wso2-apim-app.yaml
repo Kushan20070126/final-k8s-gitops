@@ -49,7 +49,7 @@ spec:
         - name: wso2.deployment.am.keyManager.external.password
           value: admin
         - name: wso2.deployment.am.keyManager.external.idp.serverURL
-          value: https://wso2is.tail97d15d.ts.net
+          value: http://wso2-is-identity-server-http.wso2.svc.cluster.local:9763
         - name: wso2.deployment.am.keyManager.external.idp.authorizeEndpoint
           value: https://wso2is.tail97d15d.ts.net/oauth2/authorize
         - name: wso2.deployment.am.keyManager.external.idp.oidcLogoutEndpoint
