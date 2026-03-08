@@ -21,13 +21,18 @@ service:
 config:
   DB_DSN: "dbname=ceylonstaydb user=postgres password=postgres123 host=postgres-postgresql.database.svc.cluster.local port=5432"
   RABBITMQ_HOST: "rabbitmq.database.svc.cluster.local"
+  RABBITMQ_PORT: "5672"
   MINIO_ENDPOINT: "minio.database.svc.cluster.local:9000"
   RABBITMQ_USER: "admin"
+  RABBITMQ_USERNAME: "admin"
+  RABBITMQ_DEFAULT_USER: "admin"
+  YOLO_CONFIG_DIR: "/tmp/Ultralytics"
 
 secrets:
   MINIO_ACCESS: "minioadmin"
   MINIO_SECRET: "minioadmin123"
   RABBITMQ_PASS: "admin123"
   RABBITMQ_PASSWORD: "admin123"
+  RABBITMQ_DEFAULT_PASS: "admin123"
 
 resources: {}

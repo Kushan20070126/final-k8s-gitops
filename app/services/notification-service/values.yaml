@@ -21,9 +21,12 @@ config:
   RABBITMQ_HOST: "rabbitmq.database.svc.cluster.local"
   RABBITMQ_PORT: "5672"
   RABBITMQ_USER: "admin"
+  RABBITMQ_USERNAME: "admin"
+  RABBITMQ_DEFAULT_USER: "admin"
 
 secrets:
   RABBITMQ_PASS: "admin123"
   RABBITMQ_PASSWORD: "admin123"
+  RABBITMQ_DEFAULT_PASS: "admin123"
 
 resources: {}

@@ -16,8 +16,18 @@ data:
     def _create_connection():
       host = os.getenv("RABBITMQ_HOST", "rabbitmq.database.svc.cluster.local")
       port = int(os.getenv("RABBITMQ_PORT", "5672"))
-      user = os.getenv("RABBITMQ_USER", "guest")
-      password = os.getenv("RABBITMQ_PASS") or os.getenv("RABBITMQ_PASSWORD", "guest")
+      user = (
+          os.getenv("RABBITMQ_USER")
+          or os.getenv("RABBITMQ_USERNAME")
+          or os.getenv("RABBITMQ_DEFAULT_USER")
+          or "admin"
+      )
+      password = (
+          os.getenv("RABBITMQ_PASS")
+          or os.getenv("RABBITMQ_PASSWORD")
+          or os.getenv("RABBITMQ_DEFAULT_PASS")
+          or "admin123"
+      )
       vhost = os.getenv("RABBITMQ_VHOST", "/")
 
       credentials = pika.PlainCredentials(user, password)

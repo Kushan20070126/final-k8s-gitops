@@ -25,6 +25,8 @@ config:
   REDIS_PORT: "6379"
   REDIS_DB: "0"
   RABBITMQ_USER: "admin"
+  RABBITMQ_USERNAME: "admin"
+  RABBITMQ_DEFAULT_USER: "admin"
 
 secrets:
   MINIO_ACCESS: "minioadmin"
@@ -32,6 +34,7 @@ secrets:
   REDIS_PASSWORD: "redis123"
   RABBITMQ_PASS: "admin123"
   RABBITMQ_PASSWORD: "admin123"
+  RABBITMQ_DEFAULT_PASS: "admin123"
 
 resources: {}
 
