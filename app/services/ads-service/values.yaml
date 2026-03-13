@@ -15,7 +15,7 @@ service:
   enabled: true
   type: NodePort
   port: 80
-  nodePort: 30134
+  nodePort: 32104
 
 ingress:
   enabled: true
