@@ -6,11 +6,20 @@ metadata:
 data:
   rabbitmq.py: |
     import os
+    import time
     import pika
 
     AI_QUEUE_NAME = "ai_queue"
     USER_EVENTS_QUEUE_NAME = "user_events_queue"
     NOTIFICATION_QUEUE_NAME = "notification_queue"
+
+
+    def _retry_delay_seconds():
+      raw_value = os.getenv("RABBITMQ_RETRY_DELAY_SECONDS", "5")
+      try:
+          return max(1, int(raw_value))
+      except ValueError:
+          return 5
 
 
     def _create_connection():
@@ -63,21 +72,28 @@ data:
 
 
     def consume_user_events(callback):
-      connection = None
-      try:
-          connection = _create_connection()
-          channel = connection.channel()
-          channel.queue_declare(queue=USER_EVENTS_QUEUE_NAME, durable=True)
-          channel.basic_consume(
-              queue=USER_EVENTS_QUEUE_NAME,
-              on_message_callback=callback,
-              auto_ack=True,
-          )
-          print("Listening for user events...")
-          channel.start_consuming()
-      except Exception as exc:
-          print(f"Connection Error: Could not reach RabbitMQ at {os.getenv('RABBITMQ_HOST')}: {exc}")
-      finally:
-          if connection and connection.is_open:
-              connection.close()
+      retry_delay = _retry_delay_seconds()
+      while True:
+          connection = None
+          try:
+              connection = _create_connection()
+              channel = connection.channel()
+              channel.queue_declare(queue=USER_EVENTS_QUEUE_NAME, durable=True)
+              channel.basic_consume(
+                  queue=USER_EVENTS_QUEUE_NAME,
+                  on_message_callback=callback,
+                  auto_ack=True,
+              )
+              print("Listening for user events...")
+              channel.start_consuming()
+          except Exception as exc:
+              print(
+                  "Connection Error: Could not reach RabbitMQ at "
+                  f"{os.getenv('RABBITMQ_HOST')}: {exc!r}. "
+                  f"Retrying in {retry_delay}s..."
+              )
+              time.sleep(retry_delay)
+          finally:
+              if connection and connection.is_open:
+                  connection.close()
 {{- end }}
