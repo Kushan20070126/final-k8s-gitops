@@ -82,8 +82,25 @@ data:
       _publish(AI_QUEUE_NAME, message)
 
 
-    def send_notification_event(message):
-      _publish(NOTIFICATION_QUEUE_NAME, message)
+    def send_notification_event(message=None, user_email=None, ad_id=None, **kwargs):
+      if isinstance(message, dict) and user_email is None and ad_id is None and not kwargs:
+          payload = message
+      elif user_email is not None or ad_id is not None or kwargs:
+          payload = {
+              "user_email": user_email,
+              "ad_id": ad_id,
+              "message": message,
+          }
+          payload.update(kwargs)
+      else:
+          payload = message
+
+      if isinstance(payload, (dict, list)):
+          payload = json.dumps(payload)
+      elif not isinstance(payload, (str, bytes, bytearray)):
+          payload = str(payload)
+
+      _publish(NOTIFICATION_QUEUE_NAME, payload)
 
 
     def consume_user_events(callback):
