@@ -10,7 +10,7 @@ data:
     import time
     import pika
 
-    AI_QUEUE_NAME = "ai_queue"
+    AI_QUEUE_NAME = "ai_processing_queue"
     USER_EVENTS_QUEUE_NAME = "user_events_queue"
     NOTIFICATION_QUEUE_NAME = "notification_queue"
 
@@ -70,8 +70,8 @@ data:
       else:
           message = {
               "ad_id": message_or_ad_id,
-              "uploaded_filenames": uploaded_filenames or [],
-              "email": email,
+              "images": uploaded_filenames or [],
+              "owner_email": email,
           }
 
       if isinstance(message, (dict, list)):
