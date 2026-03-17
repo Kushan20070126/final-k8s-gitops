@@ -4,7 +4,7 @@ replicaCount: 1
 
 image:
   repository: "kushanrandika/ai-service"
-  tag: "v1.0.0"
+  tag: "v1.0.4"
   pullPolicy: IfNotPresent
 
 containerPort: 0
@@ -23,6 +23,7 @@ args:
     mkdir -p "${YOLO_CONFIG_DIR}" "${YOLO_CONFIG_DIR}/Ultralytics" /tmp/Ultralytics || true
     chmod 0777 "${YOLO_CONFIG_DIR}" "${YOLO_CONFIG_DIR}/Ultralytics" /tmp/Ultralytics || true
     exec python - <<'PY'
+    import importlib
     import os
     import runpy
     import pika
@@ -57,6 +58,13 @@ args:
         return _orig_connection_parameters(*args, **kwargs)
 
     pika.ConnectionParameters = _patched_connection_parameters
+
+    # Some images use psycopg2.pool.* without importing the submodule.
+    # Preload it here so both old/new worker variants run safely.
+    try:
+        importlib.import_module("psycopg2.pool")
+    except Exception as exc:
+        print(f"Warning: failed to preload psycopg2.pool: {exc}")
 
     runpy.run_path("app/worker.py", run_name="__main__")
     PY
