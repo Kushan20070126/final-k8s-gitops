@@ -13,8 +13,14 @@ args: []
 
 service:
   enabled: true
-  type: ClusterIP
+  type: NodePort
   port: 80
+  nodePort: 32105
+
+ingress:
+  enabled: true
+  host: notification-api.tail97d15d.ts.net
+  path: /
 
 config:
   DATABASE_URL: "postgresql://postgres:postgres123@postgres-postgresql.database.svc.cluster.local:5432/ceylonstaydb"
