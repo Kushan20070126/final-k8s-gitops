@@ -11,6 +11,10 @@ spec:
     metadata:
       labels:
         app: {{ include "svc.fullname" . }}
+      {{- if .Values.rabbitmqPatch.enabled }}
+      annotations:
+        checksum/rabbitmq-patch: {{ include (print $.Template.BasePath "/rabbitmq-patch-configmap.yaml") . | sha256sum }}
+      {{- end }}
     spec:
       containers:
         - name: {{ include "svc.fullname" . }}
@@ -28,6 +32,12 @@ spec:
           ports:
             - containerPort: {{ .Values.containerPort }}
           {{- end }}
+          {{- if .Values.rabbitmqPatch.enabled }}
+          volumeMounts:
+            - name: rabbitmq-py-override
+              mountPath: /app/app/rabbitmq.py
+              subPath: rabbitmq.py
+          {{- end }}
           {{- if or .Values.config .Values.secrets }}
           envFrom:
             {{- if .Values.config }}
@@ -41,3 +51,9 @@ spec:
           {{- end }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
+      {{- if .Values.rabbitmqPatch.enabled }}
+      volumes:
+        - name: rabbitmq-py-override
+          configMap:
+            name: {{ include "svc.fullname" . }}-rabbitmq-patch
+      {{- end }}
