@@ -4,7 +4,7 @@ replicaCount: 2
 
 image:
   repository: "kushanrandika/ads-service"
-  tag: "v1.0.4"
+  tag: "v1.0.5"
   pullPolicy: IfNotPresent
 
 containerPort: 8000
