@@ -11,6 +11,10 @@ spec:
     metadata:
       labels:
         app: {{ include "svc.fullname" . }}
+      {{- if .Values.rabbitmqPatch.enabled }}
+      annotations:
+        checksum/rabbitmq-patch: {{ include (print $.Template.BasePath "/rabbitmq-patch-configmap.yaml") . | sha256sum }}
+      {{- end }}
     spec:
       containers:
         - name: {{ include "svc.fullname" . }}

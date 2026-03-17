@@ -5,6 +5,7 @@ metadata:
   name: {{ include "svc.fullname" . }}-rabbitmq-patch
 data:
   rabbitmq.py: |
+    import json
     import os
     import time
     import pika
@@ -63,7 +64,21 @@ data:
               connection.close()
 
 
-    def send_to_ai_queue(message):
+    def send_to_ai_queue(message_or_ad_id, uploaded_filenames=None, email=None):
+      if uploaded_filenames is None and email is None:
+          message = message_or_ad_id
+      else:
+          message = {
+              "ad_id": message_or_ad_id,
+              "uploaded_filenames": uploaded_filenames or [],
+              "email": email,
+          }
+
+      if isinstance(message, (dict, list)):
+          message = json.dumps(message)
+      elif not isinstance(message, (str, bytes, bytearray)):
+          message = str(message)
+
       _publish(AI_QUEUE_NAME, message)
 
 
