@@ -64,8 +64,6 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: spec.serviceAccountName
-        - name: KUBECONFIG
-          value: /var/run/secrets/kubernetes.io/serviceaccount/token
         - name: ISTIO_META_WORKLOAD_NAME
           value: istio-ingressgateway
         - name: ISTIO_META_OWNER
