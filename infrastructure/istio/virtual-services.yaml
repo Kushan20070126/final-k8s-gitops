@@ -1,0 +1,119 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: admin-service
+  namespace: default
+spec:
+  hosts:
+  - admin-api.tail97d15d.ts.net
+  gateways:
+  - istio-system/istio-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: admin-service
+        port:
+          number: 80
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: ads-service
+  namespace: default
+spec:
+  hosts:
+  - ads-api.tail97d15d.ts.net
+  gateways:
+  - istio-system/istio-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: ads-service
+        port:
+          number: 80
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: notification-service
+  namespace: default
+spec:
+  hosts:
+  - notification-api.tail97d15d.ts.net
+  gateways:
+  - istio-system/istio-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: notification-service
+        port:
+          number: 80
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: search-service
+  namespace: default
+spec:
+  hosts:
+  - search-api.tail97d15d.ts.net
+  gateways:
+  - istio-system/istio-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: search-service
+        port:
+          number: 80
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: super-admin-service
+  namespace: default
+spec:
+  hosts:
+  - super-admin-api.tail97d15d.ts.net
+  gateways:
+  - istio-system/istio-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: super-admin-service
+        port:
+          number: 80
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: user-service
+  namespace: default
+spec:
+  hosts:
+  - user-api.tail97d15d.ts.net
+  gateways:
+  - istio-system/istio-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: user-service
+        port:
+          number: 80

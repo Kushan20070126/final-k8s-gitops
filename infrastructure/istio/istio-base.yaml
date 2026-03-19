@@ -1,0 +1,80 @@
+# Istio Base - CRDs and base resources
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: istio-reader-service-account
+  namespace: istio-system
+  labels:
+    app: istio-reader
+    release: istio
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: istio-reader-istio-system
+  labels:
+    app: istio-reader
+    release: istio
+rules:
+- apiGroups:
+  - config.istio.io
+  - security.istio.io
+  - networking.istio.io
+  - authentication.istio.io
+  - rbac.istio.io
+  resources: ["*"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["endpoints", "pods", "services", "nodes", "replicationcontrollers", "namespaces", "secrets"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["discovery.k8s.io"]
+  resources: ["endpointslices"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apps"]
+  resources: ["replicasets"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["authentication.k8s.io"]
+  resources: ["tokenreviews"]
+  verbs: ["create"]
+- apiGroups: ["authorization.k8s.io"]
+  resources: ["subjectaccessreviews"]
+  verbs: ["create"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: istio-reader-istio-system
+  labels:
+    app: istio-reader
+    release: istio
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: istio-reader-istio-system
+subjects:
+- kind: ServiceAccount
+  name: istio-reader-service-account
+  namespace: istio-system
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: istio
+  namespace: istio-system
+  labels:
+    istio/dataPlaneMode: none
+    release: istio
+data:
+  mesh: |-
+    accessLogFile: /dev/stdout
+    defaultConfig:
+      discoveryAddress: istiod.istio-system.svc:15012
+      proxyMetadata:
+        DNS_AGENT: ""
+      tracing:
+        zipkin:
+          address: zipkin.istio-system:9411
+    enablePrometheusMerge: true
+    rootNamespace: istio-system
+    trustDomain: cluster.local
+  meshNetworks: 'networks: {}'
